@@ -1,0 +1,79 @@
+/* Structure similar to admin dashboard with minor styling changes */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f2f4f7;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #16a085;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+.left-right{
+  display: flex;
+  gap:330px;
+}
+nav {
+  background-color: #1abc9c;
+  padding: 10px 0;
+  width:200px;
+  height:100%;
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  padding:0;
+  margin-left:30px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+main {
+  padding: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.dashboard-section {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 30px;
+  width: 320px;
+}
+
+.dashboard-section h2 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.dashboard-section p {
+  color: #555;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: none;
+  background-color: #16a085;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #117a65;
+}

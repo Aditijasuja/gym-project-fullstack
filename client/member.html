@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Member Dashboard - FitNexus</title>
+  <link rel="stylesheet" href="member.css" />
+</head>
+
+<body>
+  <header>
+    <h1>Welcome, Member</h1>
+  </header>
+  <div class="left-right">
+    <nav>
+      <ul>
+        <li><button onclick="showSection('profileSection')">My Profile</button></li>
+        <li><button onclick="showSection('progressSection')">My Progress</button></li>
+        <li><button onclick="showSection('planSection')">My Plan</button></li>
+        <li><button onclick="showSection('passwordSection')">Password</button></li>
+        <li><button onclick="logout()">Logout</button></li>
+      </ul>
+    </nav>
+
+    <main>
+      <!-- Add inside <main> tag, replace the View Progress button section -->
+      <section id="profileSection" class="dashboard-section">
+        <h2>Your Profile</h2>
+        <p id="profileName"></p>
+        <p id="profileEmail"></p>
+        <button onclick="fetchMyProfile()">Refresh Profile</button>
+      </section>
+
+      <section id="progressSection" style="display: none;" class="dashboard-section">
+        <h2>Your Progress</h2>
+        <p>Track your workout, attendance, and goals.</p>
+        <button onclick="toggleProgressForm()">Set Progress</button>
+        <button onclick="toggleView()" type="submit">View Progress</button>
+        <!-- Display fetched progress -->
+        <div id="progressDisplay" style="display: none; margin-top: 20px;"></div>
+
+        <!-- Hidden Progress Form -->
+        <form id="progressForm" style="display: none; margin-top: 15px;">
+          <label for="weight">Weight (kg):</label>
+          <input type="number" id="weight" name="weight" min="1" required><br><br>
+
+          <label for="attendance">Attendance (days):</label>
+          <input type="number" id="attendance" name="attendance" min="1" required><br><br>
+
+          <label for="goal">Goal:</label>
+          <input type="text" id="goal" name="goal" required><br><br>
+
+          <button type="submit">Update Progress</button>
+        </form>
+      </section>
+
+      <section id="planSection" class="dashboard-section" style="display: none;">
+        <h2>Your Current Plan</h2>
+        <div id="planDetails">
+          <p>Loading your plan...</p>
+        </div>
+        <button onclick="fetchPlan()">Refresh Plan</button>
+      </section>
+
+      <section id="passwordSection" class="dashboard-section" style="display: none;">
+        <h2>Update Password</h2>
+        <form id="passwordForm">
+          <label for="oldPassword">Old Password:</label>
+          <input type="password" id="oldPassword" required><br><br>
+
+          <label for="newPassword">New Password:</label>
+          <input type="password" id="newPassword" required><br><br>
+
+          <button type="submit">Update Password</button>
+        </form>
+      </section>
+
+    </main>
+  </div>
+</body>
+
+<script>
+  const token = localStorage.getItem("token");
+  function showSection(sectionId) {
+    const sections = document.querySelectorAll("main section");
+    sections.forEach(section => {
+      section.style.display = "none";
+    });
+    document.getElementById(sectionId).style.display = "block";
+  }
+  function toggleProgressForm() {
+    const form = document.getElementById("progressForm");
+    const progressDisplay = document.getElementById("progressDisplay");
+    form.style.display = form.style.display === "none" ? "block" : "none";
+    progressDisplay.style.display = "none"; // Hide display when showing form
+  }
+
+  async function toggleView() {
+    const form = document.getElementById("progressForm");
+    const progressDisplay = document.getElementById("progressDisplay");
+
+    try {
+      const response = await fetch("http://localhost:8181/api/getprogress", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.progress) {
+        // Hide form and show progress
+        form.style.display = "none";
+        progressDisplay.style.display = "block";
+        progressDisplay.innerHTML = `
+          <h3>Your Recorded Progress:</h3>
+          <p><strong>Weight:</strong> ${data.progress.weight} kg</p>
+          <p><strong>Attendance:</strong> ${data.progress.attendance} days</p>
+          <p><strong>Goal:</strong> ${data.progress.goal}</p>
+        `;
+      } else {
+        // No data, ask user to fill the form
+        form.style.display = "block";
+        progressDisplay.style.display = "block";
+        progressDisplay.innerHTML = `<p style="color: red;">No progress found. Please fill the form below.</p>`;
+      }
+
+    } catch (err) {
+      console.error("Error fetching progress:", err);
+      alert("Unable to fetch progress. Try again later.");
+    }
+  }
+
+  document.getElementById("progressForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const weight = document.getElementById("weight").value;
+    const attendance = document.getElementById("attendance").value;
+    const goal = document.getElementById("goal").value;
+
+    try {
+      const response = await fetch("http://localhost:8181/api/updateprogress", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ weight, attendance, goal })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Progress updated successfully!");
+        document.getElementById("progressForm").reset();
+      } else {
+        alert("Failed to update progress: " + data.message);
+      }
+    } catch (err) {
+      alert("Something went wrong!");
+      console.error("Error:", err);
+    }
+  });
+
+  async function fetchMyProfile() {
+    try {
+      const res = await fetch('http://localhost:8181/api/myprofile',
+        {
+          method: 'GET',
+          headers: {
+            'Authentication': `bearer ${token}`
+          }
+        }
+      )
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('profileName').innerText = "Name: " + data.user.name;
+        document.getElementById('profileEmail').innerText = "Email: " + data.user.email;
+      }
+      else {
+        alert(data.message || 'Failed to Fetch Data');
+      }
+    }
+    catch (err) {
+      console.log('Error ', err);
+    }
+  };
+
+  async function fetchPlan() {
+    const planDetailsDiv = document.getElementById("planDetails");
+    try {
+      const res = await fetch("http://localhost:8181/api/myplan", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.plan) {
+        const plan = data.plan;
+
+        // Optionally calculate days remaining
+        const endDate = new Date(plan.endDate);
+        const today = new Date();
+        const diffDays = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
+
+        planDetailsDiv.innerHTML = `
+        <p><strong>Plan Name:</strong> ${plan.name}</p>
+        <p><strong>Duration:</strong> ${plan.duration} months</p>
+        <p><strong>Start Date:</strong> ${new Date(plan.startDate).toLocaleDateString()}</p>
+        <p><strong>End Date:</strong> ${new Date(plan.endDate).toLocaleDateString()}</p>
+        <p><strong>Price:</strong> ₹${plan.price}</p>
+        <p><strong>Features:</strong> ${plan.features.join(", ")}</p>
+        <p style="color: ${diffDays < 10 ? 'red' : 'green'};"><strong>Days Remaining:</strong> ${diffDays} days</p>
+      `;
+      } else {
+        planDetailsDiv.innerHTML = `<p style="color: red;">${data.message || "No active plan found."}</p>`;
+      }
+    } catch (err) {
+      console.error("Failed to fetch plan:", err);
+      planDetailsDiv.innerHTML = `<p style="color: red;">Error fetching plan. Try again later.</p>`;
+    }
+  };
+
+
+  document.getElementById("passwordForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const oldPassword = document.getElementById("oldPassword").value;
+    const newPassword = document.getElementById("newPassword").value;
+
+    try {
+      const response = await fetch("http://localhost:8181/api/updatepassword", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ oldPassword, newPassword })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert("Password updated successfully!");
+        document.getElementById("passwordForm").reset();
+      } else {
+        alert("Failed to update password: " + data.message);
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Something went wrong!");
+    }
+  });
+
+  function logout() {
+    localStorage.removeItem("token");
+    alert("Logged out successfully");
+    // window.location.href = '/member.html';//change the location--
+  }
+</script>
+
+</html>

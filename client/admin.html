@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - FitNexus</title>
+  <link rel="stylesheet" href="admin.css" />
+</head>
+
+<body>
+  <header>
+    <h1>FitNexus Admin Dashboard</h1>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="#">Dashboard</a></li>
+      <li><a href="#">Members</a></li>
+      <li><a href="#">Plans</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="dashboard-section">
+      <h2>Members List</h2>
+      <p>Monitor and evaluate individual member performance.</p>
+      <button onclick="memberButton()">View All Members</button>
+      <div id="memberContainer"></div>
+    </section>
+    <section class="dashboard-section">
+      <h2>Fetch Single Member</h2>
+      <label for="">Member ID: </label><br>
+      <input type="text" id="memberId" placeholder="Enter Member ID" />
+      <button onclick="getSingleMember()">Fetch Member</button>
+      <div id="singleMemberContainer"></div>
+    </section>
+    <section class="dashboard-section">
+      <h2>Update Member</h2>
+      <label for="">Member ID: </label><br>
+      <input type="text" id="updatememberId" placeholder="Enter Member ID" />
+      <button onclick="updateMember()">Fetch Member</button>
+      <div id="updateMemberContainer"></div>
+    </section>
+    <section class="dashboard-section">
+      <h2>Delete Member</h2>
+      <label for="">Member ID: </label><br>
+      <input type="text" id="deletememberId" placeholder="Enter Member ID" />
+      <button onclick="fetchtodeleteMember()">Fetch Member</button>
+      <div id="deleteMemberContainer"></div>
+    </section>
+
+    <section class="dashboard-section">
+      <h2>Plan Expiration</h2>
+      <p>Track which members plans are expiring soon.</p>
+      <button>Check Expirations</button>
+    </section>
+
+    <section class="dashboard-section">
+      <h2>Manage Plans</h2>
+      <p>Add, update or delete membership plans and prices.</p>
+      <div class="action-buttons">
+        <button>Add Plan</button>
+        <button>Update Plan</button>
+        <button>Delete Plan</button>
+      </div>
+    </section>
+  </main>
+  <script>
+    async function memberButton() {
+      try {
+        const res = await fetch('http://localhost:8181/api/admin/member',
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+        const data = await res.json();
+        if (res.ok) {
+          alert("Members fetched successfully");
+          console.log("Members details", data);
+          data.members.forEach(member => {
+            const memberDiv = document.createElement("div");
+            memberDiv.innerHTML = `
+          <p><strong>Name:</strong> ${member.name}</p>
+          <p><strong>Email:</strong> ${member.email}</p>
+          <p><strong>Plan:</strong> ${member.plan}</p>
+          <hr/>
+        `;
+            memberContainer.appendChild(memberDiv);
+          });
+
+        }
+        else {
+          alert("Failed to fetch members");
+        }
+
+      }
+      catch (err) {
+        alert("Error fetching data");
+        console.log("Error ", err);
+
+      }
+    }
+
+    async function getSingleMember() {
+      const memberId = document.getElementById('memberId').value.trim();
+      const container = document.getElementById('singleMemberContainer');
+
+      if (!memberid) {
+        alert("Enter member ID");
+      }
+      try {
+        const res = await fetch(`http://localhost:8181/api/admin/member/${memberId}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+        const data = await res.json();
+        if (res.ok) {
+          console.log("Member data fetched successfully");
+          container.innerHTML = "";
+          const memberDiv = document.createElement('div');
+          memberDiv.innerHTML = `
+          <p><strong> Name: </strong> ${data.name}</p>
+          <p><strong> Email: </strong> ${data.email}</p>
+          <p><strong> Plan: </strong> ${data.plan}</p>
+          `;
+          container.appendChild(memberDiv);
+        }
+        else {
+          console.log("Error fetching data");
+          container.innerHTML = '';
+        }
+      }
+      catch (err) {
+        console.log("Error ", err);
+      }
+    }
+
+    async function updateMember() {
+      const memberId = document.getElementById('updatememberId').value.trim();
+      const container = documnet.getElementById('updateMemberContainer');
+
+      if (!memberid) {
+        alert("Enter member ID");
+      }
+      try {
+        const res = await fetch(`http://localhost:8181/api/admin/member/${memberId}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          container.innerHTML = `
+          <p><strong>Name:</strong> ${data.name}</p>
+          <p><strong>Email:</strong> ${data.email}</p>
+          <label for="newPlan">New Plan:</label><br>
+          <input type="text" id="newPlan" placeholder="Enter New Plan" />
+          <br><br>
+          <button onclick="submitPlanUpdate('${memberId}')">Update Plan</button>
+        `;
+        } else {
+          alert(data.message || "Failed to fetch member");
+          container.innerHTML = "";
+        }
+      } catch (err) {
+        alert("Error fetching member");
+        console.error(err);
+      }
+    }
+
+    async function submitPlanUpdate(memberId) {
+      const newPlan = document.getElementById('newPlan').value.trim();
+      if (!newPlan) {
+        alert("Enter a new Plan");
+      }
+      try {
+        const res = await fetch(`http://localhost:8181/api/admin/member/${memberId}`,
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ plan: newPlan })
+          }
+        )
+        const data = await res.json();
+        if (res.ok) {
+          alert("Plan updated Successfully");
+          document.getElementById("updateMemberContainer").innerHTML = "";
+          document.getElementById("updatememberId").value = "";
+        }
+        else{
+          alert("Failed to update plan");
+        }
+      }
+      catch (err) {
+        console.log("Error ", err);
+      }
+    }
+
+    async function fetchtodeleteMember(){
+      const memberId = document.getElementById('deleteMemberId').value.trim();
+      const container = document.getElementById('deleteMemberContainer');
+      if(!memberId){
+        alert("Enter Member ID");
+      }
+      try{
+        const res = await fetch('',
+          {
+            method:'GET',
+            headers:{
+              'Content-Type':'application/json'
+            }
+          }
+        )
+        const data = await res.json();
+        if(res.ok){
+          container.innerHTML = `
+          <p><strong>Name: </strong> ${data.name}</p>
+          <p><strong>Email: </strong> ${data.email}</p>
+          <p><strong>Plan: </strong> ${data.plan}</p>
+           <button onclick="deleteMember('${memberId}')">Delete Member</button>
+          `;
+        }
+        else
+        {
+          alert('Failed to Delete member');
+        }
+      }
+      catch(err){
+        console.log("Error ", err);
+      }
+    }
+    async function deleteMember(memberId){
+      const confirmDelete = alert("Are you sure to delete the member");
+      if(!confirmDelete) return;
+
+      try{
+        const res = await fetch(`http://localhost:8181/api/admin/member/${memberId}`,
+          {
+            method:'DELETE',
+            headers:{
+              'Content-Type':'application/json'
+            }
+          }
+        )
+        const data = await res.json();
+        if(res.ok){
+          alert("Deletion successfull");
+           document.getElementById("deleteMemberContainer").innerHTML = "";
+        document.getElementById("deleteMemberId").value = "";
+        }
+        else{
+          alert("Deletion Failed");
+        }
+      }
+      catch(err){
+        console.log("Error ", err);
+      }
+    }
+  </script>
+</body>
+
+</html>

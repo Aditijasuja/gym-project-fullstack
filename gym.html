@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitNexus - Your Ultimate Fitness Connection</title>
+    <link rel="icon" href="assets/favicon.png" type="image/png">
+    <link rel="stylesheet" href="gym.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+</head>
+
+<body>
+    <!-- Header include navbar -->
+    <header id="home">
+        <div class="navbar">
+            <div class="logo-image">
+                <img src="assets/Logogym.png" alt="FitNexus_Logo" id="logo_image">
+            </div>
+            <div class="list">
+                <ul class="list-ul">
+                    <li><a class="link1" href="#home">Home</a></li>
+                    <li><a class="link1" href="#aboutus">About Us</a></li>
+                    <li><a class="link1" href="#trainer">Trainer</a></li>
+                    <li><a class="link1" href="#plans">Plans</a></li>
+
+                </ul>
+            </div>
+            <div class="right-button">
+                <div id="join_button">Join Now!</div>
+            </div>
+        </div>
+        <div id="join-button" class="hidden3">
+            <div class="class-button">
+                <div id="cls-button">x</div>
+            </div>
+            <h2 class="join">PLEASE JOIN</h2>
+            <form id='join-form' action="/users" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your Name"><br><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your Email"><br><br>
+                <div type="submit" class="submit-button2" onclick="clickbutton()">Submit</div>
+            </form>
+        </div>
+
+
+        <!-- Header containing image and card -->
+        <div class="left-side">
+            <img id="gym_photo" src="assets/GymHomepage.jpg.jpg" alt="GymPhoto">
+            <div class="card-header">
+                <h2 class="h2-head">THE NEW YOU IS CLOSER THAN YOU THINK</h2>
+                <h5 class="h5-head">We Offer Well Hardcore Strength Machines, Curve Treadmills, Boxing Studio, And
+                    Spinning.</h5>
+                <div id="card_button">Join Now!</div>
+            </div>
+        </div>
+    </header>
+    <div id="join-button" class="hidden3">
+        <div class="class-button">
+            <div id="cls-button">x</div>
+        </div>
+        <h2 class="join">PLEASE JOIN</h2>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Name"><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Email"><br><br>
+            <div type="submit" class="submit-button2" onclick="clickbutton()">Submit</div>
+        </form>
+    </div>
+    <main>
+        <section class="section1" id="aboutus">
+            <div class="about-us">
+                <h2 class="h2-s1">ABOUT US</h2>
+                <h5 id="h5-s1">Fitness is living life, not scheduling your fitness. Our gym is created by those with the
+                    desire and drive to have a fitness life-style, where people create their healthy habits. Our offer
+                    is a high tech gym, bespoke training programs and the social ecosystem designed to make you be your
+                    best. No matter what your athletic level is, we have seasoned coaches to come along beside you and
+                    an amazing unifying community that will help fuel the fire within. So come on over to FitNexus and
+                    get started with an evolutionary fitness experience.</h5>
+            </div>
+        </section>
+        <section class="section2">
+            <div class="why-choose-us">
+                <h2 class="h2-s2">WHY CHOOSE US</h2>
+            </div>
+            <div class="why-choose-us-img">
+                <div class="div-flex"><i class="fa-solid fa-dumbbell fa-3x"></i>
+                    <p>We use top-quality equipments for effective workouts. </p>
+                </div>
+                <div class="div-flex"><i class="fa-brands fa-gratipay fa-3x"></i>
+                    <p>There are cardio programs to improve your cardiovascular health.</p>
+                </div>
+                <div class="div-flex"><i class="fa-solid fa-user fa-3x"></i>
+                    <p>There are certified trainers committed to helping you achieve fitness goal.</p>
+                </div>
+                <div class="div-flex"><i class="fa-solid fa-clock fa-3x"></i>
+                    <p>You can choose workout times that fit your busy schedule.</p>
+                </div>
+            </div>
+        </section>
+        <section class="section3">
+            <div class="our-classes">
+                <h2 class="h2-s3">OUR CLASSES</h2>
+            </div>
+            <div class="our-classes-img">
+                <div class="class-content1">
+                    <div class="cc-img">
+                        <img src="assets/cardiohiit1.jpeg" alt="cardio_hiit" class="cc-img1">
+                    </div>
+                    <h3>CARDIO HIIT</h3>
+                    <div class="cc-text">Introducing our innovative cardio HIIT sessions designed for maximum results!
+                    </div>
+                </div>
+                <div class="class-content2">
+                    <div class="cc-img">
+                        <img src="assets/bodybuilding.jpeg" alt="body_building" class="cc-img1">
+                    </div>
+                    <h3>BODY BUILDING</h3>
+                    <div class="cc-text">Our intensive body building course will maximize muscle growth.</div>
+                </div>
+                <div class="class-content3">
+                    <div class="cc-img">
+                        <img src="assets/yoga1.jpeg" alt="yoga" class="cc-img1">
+                    </div>
+                    <h3>YOGA</h3>
+                    <div class="cc-text">Our yoga courses will give you inner peace.</div>
+                </div>
+            </div>
+        </section>
+        <section class="section4">
+            <div class="icons">
+                <div class="icons1">
+                    <i class="fa-solid fa-calendar-days fa-3x"></i>
+                    <h4 id="h4-icons1">432</h4>
+                    <h5 id="h5-icons1">WORKING DAYS</h5>
+                </div>
+
+                <div class="icons2">
+                    <i class="fa-solid fa-user-group fa-3x"></i>
+                    <h4 id="h4-icons1">2001+</h4>
+                    <h5 id="h5-icons1">HAPPY CLIENTS</h5>
+                </div>
+
+                <div class="icons3">
+                    <i class="fa-solid fa-medal fa-3x"></i>
+                    <h4 id="h4-icons1">776+</h4>
+                    <h5 id="h5-icons1">SUCCESSFULL STORIES</h5>
+                </div>
+            </div>
+        </section>
+        <section class="section5" id="trainer">
+            <div class="s5-trainer">
+                <h2 id="h-trainer" class="h2-s3">OUR TRAINER</h2>
+                <p id="p-trainer">With decades of collective experience, our expert body weight trainers are certified
+                    through rigorous instruction. Whichever trainer you go with, they will work very hard in crafting
+                    individual exercise programs to suit your particular needs & wishes. Our trainers are not just
+                    passionate about fitness but they also know how to deliver results as they stay updated with new
+                    trends & techniques in the industry. Our trainers are here to help motivate you, support you and
+                    guide through the process of building strength, improving endurance or just creating overall
+                    wellness. COME EXPERIENCE THE CHANGE AND SEE WHY A COMMITTED COACH (TRAINER) CAN MAKE ALL THE
+                    DIFFERENCE IN YOUR FITNESS PROGRAM.
+
+                </p>
+            </div>
+            <div class="trainer-img">
+                <img src="assets/trainer.jpeg" alt="trainer_img" id="trainer_img">
+            </div>
+
+        </section>
+        <section class="section6">
+            <div class="h2-s2 div-s6">What Clients say</div>
+            <div class="client-section">
+                <div class="client-say1">"This gym has literally been a life-saver. The facilities are amazing, and the
+                    trainers are super knowledgable and helpful.I would totally recommend this gym to all the fit freaks
+                    out there wishing a complete fitness alteration. - <span>Shikha Gupta</span>
+                </div>
+                <div class="client-say2">This gym is fully AC. The Trainers communicate well and properly explain each
+                    and every exercise.This is the best gym i know. - <span> Manvi Sharma</span></div>
+                <div class="client-say3">I'm amazed how quickly my body has already become more toned and flexible.I
+                    feel so healthy. - <span>Riya Bajaj</span></div>
+            </div>
+        </section>
+        <section class="section7" id="plans">
+            <div class="h2-s2 div-s6">Choose the plan</div>
+            <div class="card1">
+                <div class="h3h5">
+                    <h3 id="h3-card1">Group Training</h3>
+                    <h5 class="h5-card1">Coach and exercise</h5>
+                </div>
+                <div class="h2h5">
+                    <h2 id="h2-card1">800/- Rs</h2>
+                    <h5 class="h5-card1">per month</h5>
+                </div>
+                <div class="training-session">
+                    <h4 class="h4-card1">Training Session Includes</h4>
+                </div>
+                <div class="detail-session">
+                    <ul class="ul-card1">
+                        <li>60 Minutes Sessions</li>
+                    </ul>
+                </div>
+                <div id="button-card1">
+                    CHOOSE
+                </div>
+
+            </div>
+            <div class="card2">
+                <div class="h3h5">
+                    <h3 id="h3-card1">Personal Training</h3>
+                    <h5 class="h5-card1">Coach and exercise</h5>
+                </div>
+                <div class="h2h5">
+                    <h2 id="h2-card1">6000/- Rs</h2>
+                    <h5 class="h5-card1">per month</h5>
+                </div>
+                <div class="training-session">
+                    <h4 class="h4-card1">Training Session Includes</h4>
+                </div>
+                <div class="detail-session">
+                    <ul class="ul-card1">
+                        <li>60 Minutes Sessions</li>
+                        <li>Get 1-on-1 Training</li>
+                    </ul>
+                </div>
+                <div id="button-card2">
+                    CHOOSE
+                </div>
+            </div>
+            <div class="card3">
+                <div class="h3h5">
+                    <h3 id="h3-card1">Yoga</h3>
+                    <h5 class="h5-card1">Coach and exercise</h5>
+                </div>
+                <div class="h2h5">
+                    <h2 id="h2-card1">2300/- Rs</h2>
+                    <h5 class="h5-card1">per month</h5>
+                </div>
+                <div class="training-session">
+                    <h4 class="h4-card1">Training Session Includes</h4>
+                </div>
+                <div class="detail-session">
+                    <ul class="ul-card1">
+                        <li>60 Minutes Sessions</li>
+                        <li>Get 1-on-1 Training</li>
+                    </ul>
+                </div>
+                <div id="button-card3">
+                    CHOOSE
+                </div>
+            </div>
+            <div id="plan_card" class="hidden1">
+                <div class="class-button">
+                    <div id="cls-button2">x</div>
+                </div>
+                <h2 class="plan-form">FILL THE FORM</h2>
+                <form>
+                    <label for="name1">Name: </label>
+                    <input type="text" id="name1" name="name1" placeholder="Enter your Name"><br><br>
+
+                    <label for="gender">Gender: </label>
+                    <input type="gender" id="gender" name="gender" placeholder="Enter your Gender"><br><br>
+
+                    <label for="Age">Age: </label>
+                    <input type="age" id="age" name="age" placeholder="Enter your Age"><br><br>
+
+                    <label for="Weight">Weight: </label>
+                    <input type="weight" id="weight" name="weight" placeholder="Enter your Weight"><br><br>
+
+                    <label for="Height">Height: </label>
+                    <input type="height" id="height" name="height" placeholder="Enter your Height"><br><br>
+
+                    <div type="submit" class="pay-button" onclick="paybutton()">Pay Now</div>
+                    <div type="submit" class="submit-button1" onclick="clickbutton1()"> Submit</div>
+                </form>
+            </div>
+            <div id="plan_card" class="hidden1">
+                <div class="class-button">
+                    <div id="cls-button2">x</div>
+                </div>
+                <h2 class="plan-form">FILL THE FORM</h2>
+                <form>
+                    <label for="name">Name: </label>
+                    <input type="text" id="name" name="name" placeholder="Enter your Name"><br><br>
+
+                    <label for="gender">Gender: </label>
+                    <input type="gender" id="gender" name="gender" placeholder="Enter your Gender"><br><br>
+
+                    <label for="Age" id="label-age">Age: </label>
+                    <input type="age" id="age" name="age" placeholder="Enter your Age"><br><br>
+
+                    <label for="Weight">Weight: </label>
+                    <input type="weight" id="weight" name="weight" placeholder="Enter your Weight"><br><br>
+
+                    <label for="Height">Height: </label>
+                    <input type="height" id="height" name="height" placeholder="Enter your Height"><br><br>
+
+                    <div type="submit" class="pay-button" onclick="paybutton()">Pay Now</div>
+                    <div type="submit" class="submit-button1" onclick="clickbutton1()"> Submit</div>
+                </form>
+            </div>
+            <div id="plan_card" class="hidden1">
+                <div class="class-button">
+                    <div id="cls-button2">x</div>
+                </div>
+                <h2 class="plan-form">FILL THE FORM</h2>
+                <form>
+                    <label for="name">Name: </label>
+                    <input type="text" id="name" name="name" placeholder="Enter your Name"><br><br>
+
+                    <label for="gender">Gender: </label>
+                    <input type="gender" id="gender" name="gender" placeholder="Enter your Gender"><br><br>
+
+                    <label for="Age">Age: </label>
+                    <input type="age" id="age" name="age" placeholder="Enter your Age"><br><br>
+
+                    <label for="Weight">Weight: </label>
+                    <input type="weight" id="weight" name="weight" placeholder="Enter your Weight"><br><br>
+
+                    <label for="Height">Height: </label>
+                    <input type="height" id="height" name="height" placeholder="Enter your Height"><br><br>
+
+                    <div type="submit" class="pay-button" onclick="paybutton()">Pay Now</div>
+                    <div type="submit" class="submit-button1" onclick="clickbutton1()"> Submit</div>
+                </form>
+            </div>
+        </section>
+
+    </main>
+    <footer class="footer-class">
+        <div class="logo-input">
+            <div class="left">
+                <div class="logo">
+                    <img src="assets/Logogym.png" alt="gym-logo" id="logo_img">
+                </div>
+                <div class="logo-icons">
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-facebook"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                </div>
+            </div>
+            <div class="heading-links">
+                <h2 id="hlinks-h2">NAVIGATION BAR</h2>
+                <div class="links">
+                    <ul class="logo-link">
+                        <li class="list2"><a class="link2" href="#">About us</a></li>
+                        <li class="list2"><a class="link2" href="#">Blogs</a></li>
+                        <li class="list2"><a class="link2" href="#">FAQs</a></li>
+                        <li class="list2"><a class="link2" href="#">Become a member</a></li>
+                    </ul>
+                    <ul class="logo-link">
+                        <li class="list2"><a class="link2" href="#">Contact us</a></li>
+                        <li class="list2"><a class="link2" href="#">Privacy Policy</a></li>
+                        <li class="list2"><a class="link2" href="#">Terms & conditions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="address">
+                <h2 id="hlinks-h2">ADDRESS</h2>
+                <div>
+                    <ul class="logo-link">
+                        <li class="list2"><a class="link2" href="#">+91 123463453</a></li>
+                        <li class="list2"><a class="link2" href="#">ABC Street</a></li>
+                        <li class="list2"><a class="link2" href="#">Dehradun</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="opening-hours">
+                <h2 id="hlinks-h2">OPENING HOURS</h2>
+                <div>
+                    <ul class="logo-link">
+                        <li class="list2"><a class="link2" href="#">Mon - Fri : 5:00 a.m. to 10:00 p.m.</a></li>
+                        <li class="list2"><a class="link2" href="#">Sun closed</a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        function clickbutton() {
+            let name = document.getElementById("name");
+            let email = document.getElementById("email");
+            if (name.value == "") {
+                alert("Name is required");
+            } else if (email.value == "") {
+                alert("Email is required");
+            } else {
+                alert("Welcome: " + name.value);
+            }
+        }
+
+
+        function paybutton() {
+            alert('Payment button is clicked');
+        }
+
+        //For join button that is on navbar
+        let clickable1 = document
+            .getElementById("join_button")
+            .addEventListener("click", function () {
+                document.getElementById("join-button").classList.toggle("hidden3");
+            });
+
+        //For join button that is on home page
+        let clickable3 = document
+            .getElementById("card_button")
+            .addEventListener("click", function () {
+                document.getElementById("join-button").classList.toggle("hidden3");
+            });
+
+        //For choose button1
+        let clickable2 = document
+            .getElementById("button-card1")
+            .addEventListener("click", function () {
+                document.getElementById("plan_card").classList.toggle("hidden1");
+            });
+
+        //For choose button2
+        let clickable4 = document
+            .getElementById("button-card2")
+            .addEventListener("click", function () {
+                document.getElementById("plan_card").classList.toggle("hidden1");
+            });
+
+        //For choose button3
+        let clickable5 = document
+            .getElementById("button-card3")
+            .addEventListener("click", function () {
+                document.getElementById("plan_card").classList.toggle("hidden1");
+            });
+
+        //For close button
+        document.getElementById('cls-button').addEventListener('click', function () {
+            const joinButton = document.getElementById("join-button");
+            joinButton.style.display = 'none';  // Hide the form
+        });
+        document.getElementById('join_button').addEventListener('click', function () {
+            const joinButton = document.getElementById("join-button");
+            joinButton.style.display = 'block';  // Show the form
+        });
+
+        document.getElementById('card_button').addEventListener('click', function () {
+            const joinButton1 = document.getElementById("join-button");
+            joinButton1.style.display = 'block';  // Show the form
+        });
+
+
+        document.getElementById('cls-button2').addEventListener('click', function () {
+            const planCard = document.getElementById("plan_card");
+            planCard.style.display = 'none';  // Hide the form
+        });
+        document.getElementById('button-card1').addEventListener('click', function () {
+            const planCard = document.getElementById("plan_card");
+            planCard.style.display = 'block';  // Show the form
+        });
+        document.getElementById('button-card2').addEventListener('click', function () {
+            const planCard = document.getElementById("plan_card");
+            planCard.style.display = 'block';  // Show the form
+        });
+        document.getElementById('button-card3').addEventListener('click', function () {
+            const planCard = document.getElementById("plan_card");
+            planCard.style.display = 'block';  // Show the form
+        });
+
+        //For choose button
+        function clickbutton1() {
+            let name1 = document.getElementById("name1");
+            let age = document.getElementById("age");
+            let gender = document.getElementById("gender");
+            let weight = document.getElementById("weight");
+            let height = document.getElementById("height");
+
+            if (name1.value == "") {
+                alert("Name is required");
+            } else if (age.value == "") {
+                alert("Age is required");
+            } else if (gender.value == "") {
+                alert("Gender is required");
+            } else if (weight.value == "") {
+                alert("Weight is required");
+            } else if (height.value == "") {
+                alert("Height is required");
+            } else {
+                alert("Registration Successfull");
+            }
+        }
+
+        // hide one form if another button is clicked
+        const joinForm = document.getElementById("join-button");
+
+        const planForm = document.getElementById("plan_card");
+
+        // Function to hide all forms except the target form
+        function showOnlyForm(targetForm) {
+            const forms = [joinForm, planForm];
+
+            forms.forEach((form) => {
+                if (form !== targetForm) {
+                    form.style.display = 'none';
+                }
+            });
+
+            targetForm.style.display = 'block';
+        }
+
+         // Event listener for the Join button
+        document.getElementById("join_button").addEventListener('click', function () {
+            showOnlyForm(joinForm);
+        });
+        document.getElementById("card_button").addEventListener('click', function () {
+            showOnlyForm(joinForm);
+        });
+
+        // Event listener for the Plan button
+        document.getElementById("button-card1").addEventListener('click', function () {
+            showOnlyForm(planForm);
+        });
+        document.getElementById("button-card2").addEventListener('click', function () {
+            showOnlyForm(planForm);
+        });
+        document.getElementById("button-card3").addEventListener('click', function () {
+            showOnlyForm(planForm);
+        });
+    </script>
+</body>
+
+</html>
