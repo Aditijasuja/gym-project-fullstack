@@ -1,5 +1,5 @@
 # Gym-Project
-Welcome to the FitNexus Gym Project This project is made using Front-end Technologies i.e. HTML5, CSS, JavaScript. 
+Welcome to the FitNexus Gym Project This project is made using Front-end Technologies i.e. HTML5, CSS, JavaScript and Node.js. 
 
 ## Technologies
 The project is built using HTMl5, CSS and JavaScript to test my knowledge on flexbox and Position Property. As mentioned, flexbox is used to provide layout.
