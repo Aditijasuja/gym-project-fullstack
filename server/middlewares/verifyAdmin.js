@@ -1,9 +1,7 @@
 export const verifyAdmin = (req, res, next) => {
-  const user = req.user; // assuming you attach user via JWT middleware
-
-  if (user && user.role === 'admin') {
-    next();
-  } else {
-    res.status(403).json({ success: false, message: "Access denied" });
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ message: "Admin access only" });
   }
+  next();
 };
+//after running api/admin/member it displays user not authorized

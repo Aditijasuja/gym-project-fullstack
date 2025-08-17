@@ -1,25 +1,38 @@
-//import controller, middleware of admin 
-import {Router} from "express";
+import { Router } from "express";
+import verifyToken from "../middlewares/authmiddleware.js";
 import { verifyAdmin } from "../middlewares/verifyAdmin.js";
-
+import isLoggedIn from "../middlewares/authmiddleware.js";
+import {
+  getMember,
+  getMemberone,
+  updateMemberone,
+  deleteMember,
+  getMemberProgress,
+  getOneMemberProgress,
+  insertPlan,
+  getPlan,
+  updatePlan,
+  deletePlan,
+  planExpired,
+} from "../controllers/admincontroller.js";
 const router = Router();
 
 //related to member
-router.get('/member',verifyAdmin, getMember);
-router.get('/member/:id', getMemberone);
-router.put('/member/:id', updateMemberone);
-router.delete('/member/:id', deleteMember);
+router.get("/member",isLoggedIn, verifyToken, verifyAdmin, getMember);
+router.get("/member/:id", verifyToken, verifyAdmin, getMemberone);
+router.put("/member/:id", verifyToken, verifyAdmin, updateMemberone);
+router.delete("/member/:id", verifyToken, verifyAdmin, deleteMember);
 
 // related to Progress
-router.get('/progress', getMemberProgress);
-router.get('/progress/:id', getOneMemberProgress);
+router.get("/progress", getMemberProgress);
+router.get("/progress/:id", getOneMemberProgress);
 
 //related to plan
-router.post('/plan', insertPlan);
-router.get('/plan', getPlan);
-router.put('/plan/:id', updatePlan);
-router.delete('/plan/:id', deletePlan);
+router.post("/plan", insertPlan);
+router.get("/plan", getPlan);
+router.put("/plan/:id", updatePlan);
+router.delete("/plan/:id", deletePlan);
 
-export default route;
 //Optional plan expiring members
-//router.get('/expiringplan', planExpired);
+router.get("/expiringplan", planExpired);
+export default router;

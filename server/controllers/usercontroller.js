@@ -1,11 +1,11 @@
 import User from "../models/usermodel.js";
-// import AppError from "../utils/errorutils.js";
+import AppError from "../utils/errorutils.js";
 
-// const cookieOptions = {
-//   maxAge: 7 * 24 * 60 * 60 * 1000, //7 Days
-//   httpOnly: true,
-//   secure: true,
-// };
+const cookieOptions = {
+  maxAge: 7 * 24 * 60 * 60 * 1000, //7 Days
+  httpOnly: true,
+  secure: true,
+};
 const joinUser = async (req, res) => {
   const { name, email } = req.body;
   if (!name || !email) {

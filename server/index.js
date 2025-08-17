@@ -8,11 +8,15 @@ import userroutes from './routes/userroutes.js';
 import planRoutes from './routes/planroutes.js';
 import profileRoutes from './routes/myprofileroutes.js';
 import adminRoutes from './routes/adminroutes.js';
+import authRoutes from './routes/authroutes.js';
 
 
 dotenv.config();
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:8181", // your React/Frontend URL
+    credentials: true // <-- allow cookies
+}));
 const PORT = process.env.PORT || 3000;
 
 app.use(cookieParser());
@@ -21,6 +25,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 //Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/users', userroutes);
 app.use('/api/plans', planRoutes);
 app.use('/api/', profileRoutes);

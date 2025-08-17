@@ -1,8 +1,6 @@
 import { Schema, model } from "mongoose";
-// import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 
-const planSchema = new mongoose.Schema({
+const planSchema = new Schema({
   planName: {
     type: String,
     required: true,
@@ -31,5 +29,5 @@ const planSchema = new mongoose.Schema({
   }
 });
 
-const Plan = mongoose.model("Plan", planSchema);
+const Plan = model("Plan", planSchema);
 export default Plan;

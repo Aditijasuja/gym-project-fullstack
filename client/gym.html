@@ -257,8 +257,8 @@
                 <div class="class-button">
                     <div id="cls-button2">x</div>
                 </div>
-                <h2 class="plan-form">FILL THE FORM</h2>
-                <form id="plan-form">
+                <!-- <h2 class="plan-form">FILL THE FORM</h2> -->
+                <!-- <form id="plan-form">
                     <label for="name1">Name: </label>
                     <input type="text" id="name1" name="name1" placeholder="Enter your Name"><br><br>
 
@@ -276,13 +276,13 @@
 
                     <div type="submit" class="pay-button" onclick="paybutton()">Pay Now</div>
                     <div type="submit" class="submit-button1" onclick="clickbutton1()"> Submit</div>
-                </form>
+                </form> -->
             </div>
             <div id="plan_card" class="hidden1">
                 <div class="class-button">
                     <div id="cls-button2">x</div>
                 </div>
-                <h2 class="plan-form">FILL THE FORM</h2>
+                <!-- <h2 class="plan-form">FILL THE FORM</h2>
                 <form>
                     <label for="name">Name: </label>
                     <input type="text" id="name" name="name" placeholder="Enter your Name"><br><br>
@@ -301,13 +301,13 @@
 
                     <div type="submit" class="pay-button" onclick="paybutton()">Pay Now</div>
                     <div type="submit" class="submit-button1" onclick="clickbutton1()"> Submit</div>
-                </form>
+                </form> -->
             </div>
             <div id="plan_card" class="hidden1">
                 <div class="class-button">
                     <div id="cls-button2">x</div>
                 </div>
-                <h2 class="plan-form">FILL THE FORM</h2>
+                <!-- <h2 class="plan-form">FILL THE FORM</h2>
                 <form>
                     <label for="name">Name: </label>
                     <input type="text" id="name" name="name" placeholder="Enter your Name"><br><br>
@@ -326,7 +326,7 @@
 
                     <div type="submit" class="pay-button" onclick="paybutton()">Pay Now</div>
                     <div type="submit" class="submit-button1" onclick="clickbutton1()"> Submit</div>
-                </form>
+                </form> -->
             </div>
         </section>
 
@@ -382,7 +382,7 @@
         </div>
     </footer>
     <script>
-        
+
         async function clickbutton() {
             const name = document.getElementById("name").value;
             const email = document.getElementById("email").value;
@@ -405,20 +405,21 @@
                         body: JSON.stringify({ name, email })
                     }
                 );
+                const data = await response.json();
                 if (response.ok) {
-                    const data = await response.json();
+                    alert("User registered successfully");
                     console.log(data);
                 }
                 else {
                     throw new Error('Failed to Fetch the data');
                 }
-            }  
+            }
             catch (err) {
                 console.log("Error", err);
             }
         }
 
-
+//add functionality of payment
         function paybutton() {
             alert('Payment button is clicked');
         }
@@ -531,7 +532,7 @@
                     throw new Error("Failed to Post data");
                 }
             }
-            catch(err){
+            catch (err) {
                 console.log(err);
             }
         }

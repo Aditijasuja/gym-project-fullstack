@@ -5,7 +5,7 @@ import isLoggedIn from "../middlewares/authmiddleware.js";
 const router = Router();
 
 router.get('/myprofile', isLoggedIn, myProfile);
-router.get('/getplan', isLoggedIn, getPlan);
+router.get('/getplan', getPlan);
 router.put('/updatepassword', isLoggedIn, updatePassword);
 router.get('/getprogress', isLoggedIn, getProgress);
 router.put('/updateprogress', isLoggedIn, updateProgress);

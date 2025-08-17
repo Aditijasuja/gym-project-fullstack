@@ -51,23 +51,122 @@
       <div id="deleteMemberContainer"></div>
     </section>
 
+    <!-- member progress -->
+    <!-- build js for this -->
     <section class="dashboard-section">
-      <h2>Plan Expiration</h2>
-      <p>Track which members plans are expiring soon.</p>
-      <button>Check Expirations</button>
+      <h2>Members Progress</h2>
+      <button onclick="fetchMemberProgress()">Fetch Members Progress</button>
+      <button onclick="fetchOneMemberProgress()">Fetch Single Member Progress</button>
+      <div id="memberProgressContainer"></div>
+      <div id="memberOneProgressContainer"></div>
     </section>
 
     <section class="dashboard-section">
+      <h2>Plan Expiration</h2>
+      <p>Track which members plans are expiring soon.</p>
+      <button onclick="fetchExpiredPlans()">Check Expirations</button>
+      <div id="expiredPlansContainer"></div>
+    </section>
+
+   
+    <section class="dashboard-section">
       <h2>Manage Plans</h2>
       <p>Add, update or delete membership plans and prices.</p>
+
       <div class="action-buttons">
-        <button>Add Plan</button>
-        <button>Update Plan</button>
-        <button>Delete Plan</button>
+        <button id="addPlanBtn">Add Plan</button>
+        <button id="updatePlanBtn">Update Plan</button>
+        <button id="deletePlanBtn">Delete Plan</button>
       </div>
+
+      <!-- Add Plan Form -->
+      <form id="addPlanForm" style="display: none; margin-top: 15px;">
+        <h3>Add Plan</h3>
+        <label>Plan Name:</label><br>
+        <input type="text" id="planName" required><br>
+
+        <label>Duration (Months):</label><br>
+        <input type="number" id="durationInMonths" required><br>
+
+        <label>Price:</label><br>
+        <input type="number" id="price" required><br>
+
+        <label>Description:</label><br>
+        <textarea id="description" required></textarea><br>
+
+        <label>Features (comma separated):</label><br>
+        <input type="text" id="features" required><br>
+
+        <button type="button" onclick="insertPlan()">Submit</button>
+        <button type="button" onclick="closeForm('addPlanForm')">Cancel</button>
+      </form>
+
+      <!-- Update Plan Form -->
+      <form id="updatePlanForm" style="display: none; margin-top: 15px;">
+        <h3>Update Plan</h3>
+        <label>Plan ID:</label><br>
+        <input type="text" id="updatePlanId" required><br>
+
+        <label>Plan Name:</label><br>
+        <input type="text" id="updatePlanName" required><br>
+
+        <label>Duration (Months):</label><br>
+        <input type="number" id="updateDurationInMonths" required><br>
+
+        <label>Price:</label><br>
+        <input type="number" id="updatePrice" required><br>
+
+        <label>Description:</label><br>
+        <textarea id="updateDescription" required></textarea><br>
+
+        <label>Features (comma separated):</label><br>
+        <input type="text" id="updateFeatures" required><br>
+
+        <button type="button" onclick="updatePlan()">Update</button>
+        <button type="button" onclick="closeForm('updatePlanForm')">Cancel</button>
+      </form>
+
+      <!-- Delete Plan Form -->
+      <form id="deletePlanForm" style="display: none; margin-top: 15px;">
+        <h3>Delete Plan</h3>
+        <label>Plan ID:</label><br>
+        <input type="text" id="deletePlanId" required><br>
+
+        <button type="button" onclick="deletePlan()">Delete</button>
+        <button type="button" onclick="closeForm('deletePlanForm')">Cancel</button>
+      </form>
     </section>
+
   </main>
   <script>
+
+    document.getElementById("addPlanBtn").addEventListener("click", () => {
+      showForm("addPlanForm");
+    });
+
+    document.getElementById("updatePlanBtn").addEventListener("click", () => {
+      showForm("updatePlanForm");
+    });
+
+    document.getElementById("deletePlanBtn").addEventListener("click", () => {
+      showForm("deletePlanForm");
+    });
+
+    function showForm(formId) {
+      // Hide all forms first
+      document.getElementById("addPlanForm").style.display = "none";
+      document.getElementById("updatePlanForm").style.display = "none";
+      document.getElementById("deletePlanForm").style.display = "none";
+
+      // Show the selected form
+      document.getElementById(formId).style.display = "block";
+    }
+
+    function closeForm(formId) {
+      document.getElementById(formId).style.display = "none";
+    }
+
+
     async function memberButton() {
       try {
         const res = await fetch('http://localhost:8181/api/admin/member',
@@ -75,7 +174,8 @@
             method: 'GET',
             headers: {
               'Content-Type': 'application/json'
-            }
+            },
+            credentials:"include"
           })
         const data = await res.json();
         if (res.ok) {
@@ -198,7 +298,7 @@
           document.getElementById("updateMemberContainer").innerHTML = "";
           document.getElementById("updatememberId").value = "";
         }
-        else{
+        else {
           alert("Failed to update plan");
         }
       }
@@ -207,23 +307,23 @@
       }
     }
 
-    async function fetchtodeleteMember(){
+    async function fetchtodeleteMember() {
       const memberId = document.getElementById('deleteMemberId').value.trim();
       const container = document.getElementById('deleteMemberContainer');
-      if(!memberId){
+      if (!memberId) {
         alert("Enter Member ID");
       }
-      try{
+      try {
         const res = await fetch('',
           {
-            method:'GET',
-            headers:{
-              'Content-Type':'application/json'
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
             }
           }
         )
         const data = await res.json();
-        if(res.ok){
+        if (res.ok) {
           container.innerHTML = `
           <p><strong>Name: </strong> ${data.name}</p>
           <p><strong>Email: </strong> ${data.email}</p>
@@ -231,42 +331,269 @@
            <button onclick="deleteMember('${memberId}')">Delete Member</button>
           `;
         }
-        else
-        {
+        else {
           alert('Failed to Delete member');
         }
       }
-      catch(err){
+      catch (err) {
         console.log("Error ", err);
       }
     }
-    async function deleteMember(memberId){
+    async function deleteMember(memberId) {
       const confirmDelete = alert("Are you sure to delete the member");
-      if(!confirmDelete) return;
+      if (!confirmDelete) return;
 
-      try{
+      try {
         const res = await fetch(`http://localhost:8181/api/admin/member/${memberId}`,
           {
-            method:'DELETE',
-            headers:{
-              'Content-Type':'application/json'
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
             }
           }
         )
         const data = await res.json();
-        if(res.ok){
+        if (res.ok) {
           alert("Deletion successfull");
-           document.getElementById("deleteMemberContainer").innerHTML = "";
-        document.getElementById("deleteMemberId").value = "";
+          document.getElementById("deleteMemberContainer").innerHTML = "";
+          document.getElementById("deleteMemberId").value = "";
         }
-        else{
+        else {
           alert("Deletion Failed");
         }
       }
-      catch(err){
+      catch (err) {
         console.log("Error ", err);
       }
     }
+    async function fetchMemberProgress() {
+      try {
+        const res = await fetch(`http://localhost:8181/api/admin/progress`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+        const data = await res.json();
+        if (res.ok) {
+          const memberProgressContainer = document.getElementById('memberProgressContainer');
+          memberProgressContainer.HTML = '';
+
+          data.data.memberProgressContainer(member => {
+            memberProgressContainer.HTML += `
+            <div>
+
+              <p><strong>Name:<strong> ${member.name}</p>
+              <p><strong>Progress:<strong> ${member.progress}</p>
+              <p><strong>Plan:<strong> ${member.plan}</p>
+
+            </div>
+            `;
+          })
+        }
+        else {
+          console.log("Failed to Fetch Data");
+        }
+      }
+      catch (err) {
+        console.log("Error ", err);
+      }
+    }
+
+    async function fetchOneMemberProgress() {
+      try {
+        const res = await fetch(`http://localhost:8181/api/admin/progress/${memberId}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        )
+        const data = await res.json();
+        if (res.ok) {
+          const memberProgressContainer = document.getElementById('memberOneProgressContainer');
+
+
+
+          memberProgressContainer.HTML = `
+            <div>
+
+              <p><strong>Name:<strong> ${data.data.name}</p>
+              <p><strong>Progress:<strong> ${data.data.progress}</p>
+              <p><strong>Plan:<strong> ${data.data.plan}</p>
+
+            </div>
+            `;
+
+        }
+        else {
+          console.log("Failed to Fetch Data");
+        }
+      }
+      catch (err) {
+        console.log("Error ", err);
+      }
+    }
+
+    async function insertPlan() {
+      try {
+        // Example: Getting values from form inputs
+        const planName = document.getElementById("planName").value;
+        const durationInMonths = document.getElementById("durationInMonths").value;
+        const price = document.getElementById("price").value;
+        const description = document.getElementById("description").value;
+        const features = document.getElementById("features").value.split(","); // comma separated
+
+        // Send the data to the backend
+        const res = await fetch('http://localhost:8181/api/admin/plan', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            planName,
+            durationInMonths,
+            price,
+            description,
+            features
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Plan inserted successfully!");
+          console.log("Inserted Plan:", data);
+        } else {
+          console.log("Failed to insert plan:", data.message || data);
+          alert("Failed to insert plan: " + (data.message || "Unknown error"));
+        }
+      } catch (err) {
+        console.log("Error inserting plan:", err);
+        alert("An error occurred while inserting the plan.");
+      }
+    }
+    async function updatePlan() {
+      try {
+        const id = document.getElementById("updatePlanId").value;
+        const planName = document.getElementById("updatePlanName").value;
+        const durationInMonths = document.getElementById("updateDurationInMonths").value;
+        const price = document.getElementById("updatePrice").value;
+        const description = document.getElementById("updateDescription").value;
+        const features = document.getElementById("updateFeatures").value.split(",");
+
+        if (!id || !planName || !durationInMonths || !price || !description || features.length === 0) {
+          alert("Please fill all fields.");
+          return;
+        }
+
+        const res = await fetch(`http://localhost:8181/api/admin/plan/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            planName,
+            durationInMonths,
+            price,
+            description,
+            features
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Plan updated successfully!");
+          console.log("Updated Plan:", data);
+          closeForm("updatePlanForm");
+        } else {
+          alert(`Failed to update plan: ${data.message || "Unknown error"}`);
+        }
+      } catch (err) {
+        console.error("Error updating plan:", err);
+        alert("Error occurred while updating plan.");
+      }
+    }
+    async function deletePlan() {
+      try {
+        const id = document.getElementById("deletePlanId").value;
+
+        if (!id) {
+          alert("Please enter a Plan ID.");
+          return;
+        }
+
+        const confirmDelete = confirm("Are you sure you want to delete this plan?");
+        if (!confirmDelete) return;
+
+        const res = await fetch(`http://localhost:8181/api/admin/plan/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Plan deleted successfully!");
+          console.log("Deleted Plan:", data);
+          closeForm("deletePlanForm");
+        } else {
+          alert(`Failed to delete plan: ${data.message || "Unknown error"}`);
+        }
+      } catch (err) {
+        console.error("Error deleting plan:", err);
+        alert("Error occurred while deleting plan.");
+      }
+    }
+    async function fetchExpiredPlans() {
+      try {
+        const res = await fetch('http://localhost:8181/api/admin/planExpired', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        const data = await res.json();
+
+        // Log result
+        console.log("Expired Plans Data:", data);
+
+        // Example: display in HTML
+        const container = document.getElementById('expiredPlansContainer');
+        container.innerHTML = '';
+
+        if (data.data.length === 0) {
+          container.innerHTML = `<p>No expired plans found.</p>`;
+        } else {
+          data.data.forEach(member => {
+            container.innerHTML += `
+          <div>
+            <p><strong>Name:</strong> ${member.name}</p>
+            <p><strong>Email:</strong> ${member.email}</p>
+            <p><strong>Plan Expiry:</strong> ${new Date(member.planExpiryDate).toLocaleDateString()}</p>
+          </div>
+          <hr>
+        `;
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching expired plans:", error);
+      }
+    }
+
+    // Call function on page load
+    // fetchExpiredPlans();
   </script>
 </body>
 

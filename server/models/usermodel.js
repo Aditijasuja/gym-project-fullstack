@@ -17,9 +17,14 @@ const userSchema = new Schema({
     lowercase: true,
     trim: true,
   },
-  password:{
-    type:String,
-    require:true
+  password: {
+    type: String,
+    require: true,
+  },
+  role: {
+    type: String,
+    enum: ["member", "admin"],
+    default: "member",
   },
   progress: {
     weight: {
@@ -30,7 +35,7 @@ const userSchema = new Schema({
       type: Number,
       default: 0,
     },
-   attendence: {
+    attendence: {
       type: Number,
       default: 0,
     },
