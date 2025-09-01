@@ -1,12 +1,11 @@
-#How to run this project
+# Gym-Project
+
+# How to run this project
 1. Type git clone [github link] in Terminal.
 2. cd server
 3. Run npm init, npm install, npm install moongose express.js cors
 4. Run node index.js
 
-
-
-# Gym-Project
 Welcome to the FitNexus Gym Project This project is made using Front-end Technologies i.e. HTML5, CSS, JavaScript and Node.js. 
 
 ## Technologies
